@@ -1,0 +1,369 @@
+/* Schriften werden selbst gehostet (Ordner /fonts), keine Verbindung zu Google. */
+@font-face { font-family: "Alegreya"; font-style: normal; font-weight: 400; font-display: swap; src: url("../fonts/alegreya-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya"; font-style: normal; font-weight: 500; font-display: swap; src: url("../fonts/alegreya-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya"; font-style: normal; font-weight: 700; font-display: swap; src: url("../fonts/alegreya-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya"; font-style: italic; font-weight: 400; font-display: swap; src: url("../fonts/alegreya-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya"; font-style: italic; font-weight: 500; font-display: swap; src: url("../fonts/alegreya-latin-500-italic.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya Sans"; font-style: normal; font-weight: 300; font-display: swap; src: url("../fonts/alegreya-sans-latin-300-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("../fonts/alegreya-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alegreya Sans"; font-style: normal; font-weight: 500; font-display: swap; src: url("../fonts/alegreya-sans-latin-500-normal.woff2") format("woff2"); }
+
+:root {
+  --raum: #1b120d;
+  --pergament: #e8dcc3;
+  --pergament-dunkel: #cbb891;
+  --gold: #c9a35a;
+  --text: #dccfb6;
+  --text-leise: #a3937a;
+  --linie: rgba(201, 163, 90, 0.45);
+  --schrift-display: "Alegreya", Georgia, "Times New Roman", serif;
+  --schrift-text: "Alegreya Sans", "Gill Sans", "Trebuchet MS", sans-serif;
+  --menue-hoehe: 60px;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --raum: #1b120d; } }
+:root[data-theme="dark"] { --raum: #1b120d; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  margin: 0;
+  background: var(--raum);
+  color: var(--text);
+  font-family: var(--schrift-text);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body.gesperrt { overflow: hidden; }
+
+/* ---------- Szene ---------- */
+#szene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; pointer-events: none; touch-action: pan-y; }
+#szene.greifbar, body.greifbar { cursor: pointer; }
+body.regal #szene { pointer-events: auto; }
+.vignette {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 45%, rgba(10,5,2,0.65) 100%);
+}
+#abdunkeln {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(27,18,13,0.92) 0%, rgba(27,18,13,0.75) 45%, rgba(27,18,13,0.35) 100%);
+}
+#scroll { position: relative; z-index: 0; width: 100%; pointer-events: none; }
+
+#laden {
+  position: fixed; inset: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--raum);
+  color: var(--text-leise);
+  font: italic 400 1.3rem var(--schrift-display);
+  transition: opacity .8s ease;
+}
+#laden.fertig { opacity: 0; pointer-events: none; }
+
+/* ---------- Menü ---------- */
+#menue {
+  position: fixed; left: 0; right: 0; top: 0; z-index: 10;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: linear-gradient(rgba(27,18,13,0.85), rgba(27,18,13,0.0));
+  pointer-events: none;
+}
+#menue .leiste {
+  height: var(--menue-hoehe);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(16px, 3vw, 40px);
+  pointer-events: auto;
+}
+#menue .marke {
+  color: var(--pergament); text-decoration: none;
+  font: 500 1.25rem/1 var(--schrift-display);
+  background: none; border: 0; padding: 0; cursor: pointer;
+}
+#menue .marke:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+#buchtabs { display: flex; gap: 22px; align-items: center; }
+#menue .rechts { display: flex; gap: 18px; align-items: center; }
+#regal-knopf {
+  display: none; appearance: none; background: none; cursor: pointer;
+  border: 1px solid var(--linie); color: var(--pergament);
+  padding: 7px 14px; font: 400 14px/1 var(--schrift-text);
+  transition: border-color .3s, background .3s;
+}
+#regal-knopf.da { display: inline-block; }
+#regal-knopf:hover { border-color: var(--gold); }
+#regal-knopf:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+#buchtabs button, #inhalt-knopf {
+  appearance: none; background: none; border: 0; padding: 6px 0;
+  color: var(--text-leise);
+  font: 400 15px/1 var(--schrift-text);
+  font-variant-numeric: lining-nums tabular-nums;
+  cursor: pointer; position: relative;
+  transition: color .3s;
+}
+#buchtabs button::after {
+  content: ""; position: absolute; left: 50%; bottom: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transform: translateX(-50%);
+  transition: width .3s ease;
+}
+#buchtabs button:hover, #buchtabs button.aktiv { color: var(--pergament); }
+#buchtabs button.aktiv::after { width: 100%; }
+#buchtabs button:focus-visible, #inhalt-knopf:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+#inhalt-knopf {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--pergament);
+  padding: 8px 2px;
+}
+#inhalt-knopf i {
+  display: inline-block; width: 22px; height: 11px;
+  border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+}
+#inhaltsverzeichnis {
+  position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index: 11;
+  background: rgba(27,18,13,0.96);
+  padding: calc(env(safe-area-inset-top, 0px) + 90px) clamp(20px, 8vw, 140px) 40px;
+  overflow: auto;
+  display: none;
+}
+#inhaltsverzeichnis.offen { display: block; }
+#inhaltsverzeichnis .schliessen {
+  position: absolute; right: clamp(16px, 3vw, 40px); top: calc(env(safe-area-inset-top, 0px) + 14px);
+  appearance: none; background: none; border: 0; cursor: pointer;
+  color: var(--pergament); font: 400 1rem var(--schrift-text); padding: 8px;
+}
+#inhaltsverzeichnis .schliessen:focus-visible { outline: 2px solid var(--gold); }
+#inhaltsverzeichnis h2 { margin: 0 0 1.4rem; font: italic 500 1.6rem var(--schrift-display); color: var(--text-leise); }
+#inhaltsverzeichnis ol { list-style: none; margin: 0; padding: 0; max-width: 40rem; }
+#inhaltsverzeichnis li { border-top: 1px solid var(--linie); }
+#inhaltsverzeichnis li:last-child { border-bottom: 1px solid var(--linie); }
+#inhaltsverzeichnis button {
+  appearance: none; background: none; border: 0; width: 100%; text-align: left; cursor: pointer;
+  display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; align-items: baseline;
+  padding: 1rem 0; color: var(--text);
+}
+#inhaltsverzeichnis button .jahr { font: 700 1.3rem/1 var(--schrift-display); color: var(--gold); font-variant-numeric: lining-nums; overflow-wrap: anywhere; }
+#inhaltsverzeichnis h3 { margin: 2rem 0 .6rem; font: 400 .95rem/1 var(--schrift-text); color: var(--text-leise); }
+#inhaltsverzeichnis button .titel { font: 400 1.15rem/1.3 var(--schrift-text); color: var(--pergament); }
+#inhaltsverzeichnis button .unter { display: block; color: var(--text-leise); font-size: .95rem; margin-top: .2rem; }
+#inhaltsverzeichnis button:hover .titel { color: var(--gold); }
+#inhaltsverzeichnis button:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+#fortschritt {
+  position: fixed; left: 0; top: env(safe-area-inset-top, 0px);
+  height: 2px; width: 100%; z-index: 12;
+  background: rgba(201,163,90,0.12);
+}
+#fortschritt i { display: block; height: 100%; width: 0; background: var(--gold); }
+
+/* ---------- Textebenen ---------- */
+.ebene { position: fixed; z-index: 2; pointer-events: none; opacity: 0; }
+#intro {
+  right: clamp(24px, 6vw, 110px); top: 50%;
+  translate: 0 -50%;
+  width: min(34vw, 30rem); opacity: 1;
+}
+#intro h1 { margin: 0 0 .5rem; font: 500 clamp(2rem, 3.6vw, 3.4rem)/1.05 var(--schrift-display); color: var(--pergament); letter-spacing: -0.01em; }
+#intro .intro-text { margin: 1.2rem 0 0; font-size: clamp(1.05rem, 1.4vw, 1.3rem); line-height: 1.5; max-width: 28rem; }
+#intro.aktiv { pointer-events: auto; }
+#buchliste { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.6rem; }
+#buchliste button {
+  appearance: none; background: none; cursor: pointer;
+  border: 1px solid var(--linie); color: var(--pergament);
+  padding: .7rem 1.2rem; font: 400 1rem/1 var(--schrift-text);
+  display: flex; align-items: center; gap: 10px;
+  transition: border-color .3s, background .3s;
+}
+#buchliste button i { display: inline-block; width: 8px; height: 22px; border-radius: 1px; }
+#buchliste button:hover { border-color: var(--gold); background: rgba(201,163,90,0.08); }
+#buchliste button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+#hinweis {
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
+  transform: translateX(-50%); z-index: 2; pointer-events: none;
+  color: var(--text-leise); font-size: .95rem;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+#hinweis i { display: block; width: 1px; height: 38px; background: linear-gradient(var(--gold), transparent); animation: faden 2.2s ease-in-out infinite; }
+@keyframes faden { 0%,100% { transform: scaleY(.4); transform-origin: top; opacity: .4 } 50% { transform: scaleY(1); opacity: 1 } }
+@media (prefers-reduced-motion: reduce) { #hinweis i { animation: none; } }
+
+.kapitel {
+  right: clamp(24px, 6vw, 110px); top: 50%;
+  transform: translateY(-50%);
+  width: min(32vw, 28rem);
+  opacity: 1;
+}
+.kapitel-inhalt {
+  position: relative; padding-left: 1.6rem; border-left: 1px solid var(--linie); opacity: 0;
+  max-height: calc(100vh - var(--menue-hoehe) - 60px); overflow: hidden;
+}
+.kapitel-text { will-change: transform; }
+/* Finger und Maus gehen durch das Panel hindurch an die Seite – nur Knöpfe reagieren */
+.kapitel-inhalt.aktiv button, .kapitel-inhalt.aktiv a { pointer-events: auto; }
+.kapitel-inhalt .mehr {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 64px; pointer-events: none;
+  background: linear-gradient(rgba(27,18,13,0), rgba(27,18,13,0.9));
+  opacity: 0;
+}
+.kapitel .jahr { margin: 0; font: 700 clamp(3rem, 5.4vw, 5rem)/.95 var(--schrift-display); color: var(--gold); font-variant-numeric: lining-nums; letter-spacing: -0.02em; }
+.kapitel h2 { margin: .9rem 0 .25rem; font: italic 500 clamp(1.5rem, 2.3vw, 2.1rem)/1.15 var(--schrift-display); color: var(--pergament); }
+.kapitel .untertitel { margin: 0 0 1.1rem; color: var(--text-leise); font-size: 1.02rem; }
+.kapitel .text { margin: 0; font-size: clamp(1rem, 1.15vw, 1.12rem); line-height: 1.55; max-width: 60ch; }
+.kapitel blockquote { margin: 1.2rem 0 0; padding: 0; font: italic 400 1.1rem/1.45 var(--schrift-display); color: var(--pergament-dunkel); }
+.kapitel blockquote footer { margin-top: .35rem; font: 400 .85rem/1.3 var(--schrift-text); color: var(--text-leise); font-style: normal; }
+#inhaltsseite .buchtitel { margin: 0; font: italic 500 1.1rem/1 var(--schrift-display); color: var(--text-leise); }
+#inhaltsseite h2 { margin: .4rem 0 1rem; font: 500 clamp(2rem, 3.4vw, 3rem)/1 var(--schrift-display); color: var(--gold); }
+#inhaltsseite ol { list-style: none; margin: 0; padding: 0; }
+#inhaltsseite li { border-top: 1px solid var(--linie); }
+#inhaltsseite li:last-child { border-bottom: 1px solid var(--linie); }
+#inhaltsseite button {
+  appearance: none; background: none; border: 0; width: 100%; text-align: left; cursor: pointer;
+  display: grid; grid-template-columns: 5.2rem 1fr; gap: .8rem; align-items: baseline;
+  padding: .6rem 0; color: var(--text);
+}
+#inhaltsseite button .jahr { font: 700 1.15rem/1.1 var(--schrift-display); color: var(--gold); font-variant-numeric: lining-nums; letter-spacing: 0; overflow-wrap: anywhere; }
+#inhaltsseite button .titel { font: 400 1.02rem/1.3 var(--schrift-text); color: var(--pergament); }
+#inhaltsseite button:hover .titel { color: var(--gold); }
+#inhaltsseite button:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.galerie-knopf {
+  display: none; margin-top: 1.4rem;
+  appearance: none; background: none; cursor: pointer;
+  border: 1px solid var(--gold); color: var(--pergament);
+  padding: .65rem 1.2rem;
+  font: 400 .95rem/1 var(--schrift-text);
+  transition: background .3s, color .3s;
+}
+.galerie-knopf.da { display: inline-block; }
+.galerie-knopf:hover { background: var(--gold); color: var(--raum); }
+.galerie-knopf:focus-visible { outline: 2px solid var(--pergament); outline-offset: 3px; }
+
+#schluss {
+  left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(88vw, 34rem); text-align: center;
+}
+#schluss h2 { margin: 0 0 1rem; font: 500 clamp(2rem, 4.2vw, 3.4rem)/1.05 var(--schrift-display); color: var(--pergament); }
+#schluss p { margin: 0 0 1.4rem; font-size: 1.1rem; line-height: 1.55; }
+#schluss-buecher { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 0 1.8rem; }
+#schluss-buecher button {
+  appearance: none; background: none; cursor: pointer;
+  border: 1px solid var(--linie); color: var(--pergament);
+  padding: .7rem 1.2rem; font: 400 1rem/1 var(--schrift-text);
+  display: flex; align-items: center; gap: 10px;
+  transition: border-color .3s, background .3s;
+}
+#schluss-buecher button i { display: inline-block; width: 8px; height: 22px; border-radius: 1px; }
+#schluss-buecher button:hover { border-color: var(--gold); background: rgba(201,163,90,0.08); }
+#schluss-buecher button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+#schluss address { font-style: normal; color: var(--text-leise); line-height: 1.6; margin-bottom: 1.6rem; }
+#schluss a.aktion {
+  display: inline-block; padding: .8rem 1.7rem;
+  border: 1px solid var(--gold); color: var(--pergament); text-decoration: none;
+  font: 400 1rem/1 var(--schrift-text);
+  transition: background .3s, color .3s;
+}
+#schluss a.aktion:hover { background: var(--gold); color: var(--raum); }
+#schluss a.aktion:focus-visible { outline: 2px solid var(--pergament); outline-offset: 4px; }
+#schluss .rechtliches { margin-top: 2.4rem; display: flex; justify-content: center; gap: 2rem; }
+#schluss .rechtliches a { color: var(--text-leise); text-decoration: none; font-size: .9rem; border-bottom: 1px solid transparent; }
+#schluss .rechtliches a:hover { color: var(--pergament); border-color: var(--linie); }
+#schluss.aktiv { pointer-events: auto; }
+
+/* ---------- Lightbox ---------- */
+#lichtbox {
+  position: fixed; inset: 0; z-index: 20;
+  background: rgba(14, 9, 6, 0.96);
+  display: none; flex-direction: column;
+  padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px calc(env(safe-area-inset-bottom, 0px) + 16px);
+}
+#lichtbox.offen { display: flex; }
+#lichtbox .kopf { display: flex; justify-content: space-between; align-items: center; height: 44px; flex: 0 0 auto; }
+#lichtbox .kopf .zaehler { color: var(--text-leise); font-size: .95rem; font-variant-numeric: tabular-nums; }
+#lichtbox .kopf .ueberschrift { color: var(--pergament); font: italic 500 1.1rem var(--schrift-display); }
+#lichtbox .buehne { flex: 1 1 auto; position: relative; min-height: 0; display: flex; align-items: center; justify-content: center; }
+#lichtbox .buehne img {
+  max-width: 100%; max-height: 100%; object-fit: contain;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  background: #000;
+}
+#lichtbox .bu { flex: 0 0 auto; text-align: center; color: var(--text); font: italic 400 1.05rem/1.4 var(--schrift-display); padding: 14px 44px 8px; min-height: 2.4rem; }
+#lichtbox .pfeil, #lichtbox .zu {
+  appearance: none; background: rgba(27,18,13,0.7); border: 1px solid var(--linie); color: var(--pergament);
+  cursor: pointer; width: 44px; height: 44px; border-radius: 50%;
+  font: 400 1.4rem/1 var(--schrift-display);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s;
+}
+#lichtbox .pfeil:hover, #lichtbox .zu:hover { border-color: var(--gold); background: rgba(27,18,13,0.95); }
+#lichtbox .pfeil:focus-visible, #lichtbox .zu:focus-visible, #lichtbox .streifen button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+#lichtbox .pfeil { position: absolute; top: 50%; transform: translateY(-50%); }
+#lichtbox .pfeil.zurueck { left: 4px; }
+#lichtbox .pfeil.weiter { right: 4px; }
+#lichtbox .streifen {
+  flex: 0 0 auto; display: flex; gap: 8px; justify-content: center; overflow-x: auto; padding: 8px 4px 2px;
+  scrollbar-width: thin;
+}
+#lichtbox .streifen button {
+  appearance: none; padding: 0; border: 1px solid transparent; background: none; cursor: pointer;
+  width: 64px; height: 48px; flex: 0 0 auto; opacity: .55; transition: opacity .2s, border-color .2s;
+}
+#lichtbox .streifen button img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#lichtbox .streifen button.aktiv, #lichtbox .streifen button:hover { opacity: 1; border-color: var(--gold); }
+#lichtbox .leer { color: var(--text-leise); font-style: italic; }
+
+/* ---------- Hochformat ---------- */
+@media (max-aspect-ratio: 11/10) {
+  #intro { left: 5vw; right: 5vw; width: auto; top: auto; translate: none; bottom: calc(env(safe-area-inset-bottom, 0px) + 9vh); }
+  #intro h1 { font-size: 1.8rem; }
+  #intro .intro-text { font-size: 1rem; }
+  #buchtabs { display: none; }
+  #regal-knopf { padding: 7px 10px; }
+  #intro { left: 6vw; right: 6vw; max-width: none; }
+  .kapitel {
+    left: 5vw; right: 5vw; width: auto;
+    top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 2vh);
+    transform: none;
+  }
+  .kapitel-inhalt { padding-left: 1rem; max-height: 46vh; }
+  .kapitel .jahr { font-size: 2.4rem; }
+  .kapitel h2 { font-size: 1.35rem; margin-top: .4rem; }
+  .kapitel .untertitel { margin-bottom: .7rem; font-size: .95rem; }
+  .kapitel .text { font-size: .98rem; line-height: 1.5; }
+  .kapitel blockquote { font-size: 1rem; margin-top: .8rem; }
+  #inhaltsseite .buchtitel { margin: 0; font: italic 500 1.1rem/1 var(--schrift-display); color: var(--text-leise); }
+#inhaltsseite h2 { margin: .4rem 0 1rem; font: 500 clamp(2rem, 3.4vw, 3rem)/1 var(--schrift-display); color: var(--gold); }
+#inhaltsseite ol { list-style: none; margin: 0; padding: 0; }
+#inhaltsseite li { border-top: 1px solid var(--linie); }
+#inhaltsseite li:last-child { border-bottom: 1px solid var(--linie); }
+#inhaltsseite button {
+  appearance: none; background: none; border: 0; width: 100%; text-align: left; cursor: pointer;
+  display: grid; grid-template-columns: 5.2rem 1fr; gap: .8rem; align-items: baseline;
+  padding: .6rem 0; color: var(--text);
+}
+#inhaltsseite button .jahr { font: 700 1.15rem/1.1 var(--schrift-display); color: var(--gold); font-variant-numeric: lining-nums; letter-spacing: 0; overflow-wrap: anywhere; }
+#inhaltsseite button .titel { font: 400 1.02rem/1.3 var(--schrift-text); color: var(--pergament); }
+#inhaltsseite button:hover .titel { color: var(--gold); }
+#inhaltsseite button:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.galerie-knopf { margin-top: 1rem; }
+  #lichtbox .bu { padding: 10px 4px 4px; }
+}
+@media (min-aspect-ratio: 11/10) {
+  #inhalt-knopf { display: none; }
+}
+@media (min-aspect-ratio: 11/10) and (max-width: 900px) {
+  #buchtabs { display: none; }
+  #inhalt-knopf { display: flex; }
+}
+
+/* ---------- Textseiten (Impressum, Datenschutz) ---------- */
+.textseite { max-width: 42rem; margin: 0 auto; padding: 8vh clamp(20px, 6vw, 60px) 12vh; }
+.textseite a { color: var(--gold); }
+.textseite h1 { font: 500 clamp(2rem, 5vw, 3rem)/1.1 var(--schrift-display); color: var(--pergament); margin: 0 0 2rem; }
+.textseite h2 { font: italic 500 1.5rem/1.2 var(--schrift-display); color: var(--pergament); margin: 2.4rem 0 .6rem; }
+.textseite p, .textseite li { font-size: 1.08rem; line-height: 1.6; }
+.textseite .zurueck { display: inline-block; margin-bottom: 3rem; color: var(--text-leise); text-decoration: none; border-bottom: 1px solid var(--linie); }
+.textseite .platzhalter { background: rgba(201,163,90,0.12); border-left: 3px solid var(--gold); padding: .8rem 1rem; color: var(--pergament); }
+
+/* ---------- Ohne WebGL: Inhalte als einfache Textseite ---------- */
+body.ohne-3d #szene, body.ohne-3d .vignette, body.ohne-3d #menue, body.ohne-3d #intro, body.ohne-3d #hinweis, body.ohne-3d #fortschritt { display: none; }
+.fallback { position: relative; z-index: 5; }
+.fallback h3 { font: italic 500 1.2rem/1.3 var(--schrift-display); color: var(--gold); margin: 1.6rem 0 .3rem; }
+.fallback address { font-style: normal; color: var(--text-leise); margin-top: 3rem; line-height: 1.6; }
