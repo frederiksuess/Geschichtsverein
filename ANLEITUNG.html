@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Chronik ��� Anleitung</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="css/anleitung.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Chronik ��� Anleitung</h1>
+</header>
+<h1 id="chronik-anleitung">Chronik – Anleitung</h1>
+<p>Diese Website zeigt ein Bücherregal. Jedes Buch steht für einen
+Bereich (Chronik, Verein, Archiv), lässt sich aus dem Regal ziehen und
+wird beim Scrollen durchgeblättert; die erste Seite ist immer das
+Inhaltsverzeichnis. Alle Texte, Bilder und Pflichtangaben lassen sich
+ohne Programmierkenntnisse austauschen: Dateien per FTP ersetzen,
+fertig.</p>
+<h2 id="was-ist-in-dem-ordner">1. Was ist in dem Ordner?</h2>
+<pre><code>chronik/
+├── index.html          Die Website (muss nicht bearbeitet werden)
+├── impressum.html      Pflichtseite – AUSFÜLLEN
+├── datenschutz.html    Pflichtseite – AUSFÜLLEN
+├── bilder.php          Liest die Bildordner für die Galerie aus (siehe Abschnitt 5)
+├── ANLEITUNG.md        Diese Anleitung
+├── css/
+│   └── stil.css        Gestaltung
+├── js/
+│   ├── inhalt.js       ALLE TEXTE – die wichtigste Datei für Sie
+│   ├── chronik.js      Hauptprogramm: Abläufe, Scroll-Steuerung (nicht bearbeiten)
+│   ├── szene.js        Raum, Licht, Regal, Kamera
+│   ├── buch.js         3D-Aufbau der Bücher
+│   ├── texturen.js     Zeichnet Seiten, Leder und Holz
+│   ├── oberflaeche.js  Menü, Randnotizen, Galerie, Lightbox
+│   └── vendor/         three.js und GSAP (Bibliotheken, nicht anfassen)
+├── fonts/              Schriften, selbst gehostet (datenschutzkonform)
+├── bilder/             Ein Unterordner je Bildergalerie
+│   ├── 1879-eisenbahn/
+│   └── archiv-fotos/
+└── texturen/           Optional: eigene Fotos für Leder, Papier, Holz</code></pre>
+<h2 id="auf-den-server-bringen-ftp">2. Auf den Server bringen (FTP)</h2>
+<ol type="1">
+<li>Ein FTP-Programm öffnen (z. B. FileZilla, kostenlos) und mit den
+Zugangsdaten des Hosting-Anbieters verbinden.</li>
+<li>In das Webverzeichnis wechseln. Es heißt je nach Anbieter
+<code>httpdocs</code>, <code>html</code>, <code>public_html</code>,
+<code>www</code> oder <code>htdocs</code>.</li>
+<li>Den <strong>gesamten Inhalt</strong> des Ordners
+<code>chronik</code> dorthin hochladen (also <code>index.html</code>,
+die Ordner <code>css</code>, <code>js</code>, <code>fonts</code>,
+<code>bilder</code>, <code>texturen</code> usw.).</li>
+<li>Die Domain im Browser aufrufen. Die Chronik sollte sofort
+erscheinen.</li>
+</ol>
+<p>Soll die Chronik unter einer Unteradresse laufen, z. B.
+<code>www.verein.de/chronik/</code>, den Ordner <code>chronik</code>
+einfach komplett in das Webverzeichnis legen. Alle Pfade sind relativ,
+es muss nichts angepasst werden.</p>
+<p><strong>Voraussetzungen:</strong> Jeder normale Webspace reicht. Es
+werden keine Datenbank und keine besonderen Module benötigt. Für die
+automatische Bildergalerie sollte PHP aktiv sein (bei praktisch allen
+deutschen Anbietern Standard). Ohne PHP funktioniert die Galerie
+ebenfalls, dann mit einer kleinen Liste pro Ordner (siehe 5c).</p>
+<p><strong>Wichtig: Ordnerstruktur beibehalten.</strong> Die Ordner
+<code>css</code>, <code>js</code>, <code>fonts</code>,
+<code>bilder</code> und <code>texturen</code> müssen als Ordner auf dem
+Server liegen. Liegen alle Dateien lose im Hauptordner, erscheint die
+Seite ungestaltet und bleibt bei „Das Regal wird eingeräumt …“ stehen.
+FTP-Programme wie FileZilla übertragen Ordner automatisch richtig, wenn
+man die Ordner selbst (nicht nur ihren Inhalt) hochzieht. Den
+Ordneraufbau prüfen: <code>www.ihre-domain.de/css/stil.css</code> muss
+die Stildatei anzeigen.</p>
+<p><strong>Testbetrieb auf GitHub Pages:</strong> funktioniert
+ebenfalls, allerdings ohne PHP. Die Galerien nutzen dann automatisch die
+Listen <code>bilder.json</code> (siehe 5c). Hochladen am besten vom
+Computer: auf github.com unter „Add file › Upload files“ die Ordner und
+Dateien aus dem Ordner <code>chronik</code> per Ziehen ablegen – die
+Ordner bleiben dabei erhalten. Vom Smartphone aus lassen sich auf GitHub
+keine Ordner hochladen.</p>
+<h2 id="texte-ändern">3. Texte ändern</h2>
+<p>Alle Texte stehen in <strong><code>js/inhalt.js</code></strong>. Die
+Datei mit einem Texteditor öffnen (Windows: Editor oder besser
+Notepad++; Mac: TextEdit im Modus „Reiner Text“), ändern, speichern, per
+FTP hochladen und <code>js/inhalt.js</code> auf dem Server
+überschreiben.</p>
+<p>Die Datei ist kommentiert. Die wichtigsten Regeln:</p>
+<ul>
+<li>Text steht immer zwischen geraden Anführungszeichen:
+<code>"So wie hier"</code>.</li>
+<li>Anführungszeichen <strong>im</strong> Text als deutsche Zeichen
+schreiben: <code>„Zitat“</code>. Gerade Anführungszeichen <code>"</code>
+würden den Text vorzeitig beenden.</li>
+<li>Jeder Eintrag endet mit einem Komma.</li>
+<li>Zeilenumbrüche im Text sind nicht nötig, der Text bricht automatisch
+um.</li>
+<li>Wer unsicher ist: Datei vor dem Ändern kopieren und als Sicherung
+behalten.</li>
+</ul>
+<h3 id="aufbau-bücher-und-kapitel">Aufbau: Bücher und Kapitel</h3>
+<p>Unter <code>buecher: [ … ]</code> steht jedes Buch im Regal als
+eigener Block:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;verein&quot;</span><span class="op">,</span>                              <span class="co">// Kurzname für Links (index.html#verein)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">titel</span><span class="op">:</span> <span class="st">&quot;Der Verein&quot;</span><span class="op">,</span>                       <span class="co">// Goldprägung auf Deckel und Rücken</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">untertitel</span><span class="op">:</span> <span class="st">&quot;Geschichtsverein Helsa seit 1990&quot;</span><span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">zeile</span><span class="op">:</span> <span class="st">&quot;Helsa, Wickenrode, Eschenstruth, St. Ottilien und Waldhof&quot;</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">farbe</span><span class="op">:</span> <span class="st">&quot;#1f3a2c&quot;</span><span class="op">,</span>                          <span class="co">// Lederfarbe</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">kapitel</span><span class="op">:</span> [ … ]<span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span></code></pre></div>
+<p>Ein viertes Buch hinzufügen: einen Block kopieren, Titel, Farbe und
+Kapitel anpassen. Das Regal rückt die Bände automatisch zusammen. Der
+<code>titel</code> sollte kurz bleiben (bis etwa 10 Zeichen), damit er
+auf den Buchrücken passt. Die <code>farbe</code> ist ein Hex-Code, zum
+Beispiel <code>#4a1d18</code> (Oxblutrot), <code>#1f3a2c</code>
+(Tannengrün), <code>#243049</code> (Nachtblau), <code>#5a3a1a</code>
+(Braun).</p>
+<h3 id="ein-kapitel-hinzufügen">Ein Kapitel hinzufügen</h3>
+<p>Innerhalb von <code>kapitel: [ … ]</code> eines Buches einen
+bestehenden Block kopieren und zwischen zwei Blöcken einfügen:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>          <span class="dt">jahr</span><span class="op">:</span> <span class="st">&quot;1712&quot;</span><span class="op">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>          <span class="dt">titel</span><span class="op">:</span> <span class="st">&quot;Der große Brand&quot;</span><span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>          <span class="dt">untertitel</span><span class="op">:</span> <span class="st">&quot;Zwei Drittel der Altstadt in Schutt und Asche&quot;</span><span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;In der Nacht zum 4. August 1712 …&quot;</span><span class="op">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>          <span class="dt">zitat</span><span class="op">:</span> <span class="st">&quot;Nur der Kirchturm stand noch.&quot;</span><span class="op">,</span>       <span class="co">// optional</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>          <span class="dt">quelle</span><span class="op">:</span> <span class="st">&quot;Ratsprotokoll vom 6. August 1712&quot;</span><span class="op">,</span>   <span class="co">// optional</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>          <span class="dt">galerie</span><span class="op">:</span> <span class="st">&quot;1712-brand&quot;</span><span class="op">,</span>                        <span class="co">// optional, siehe Abschnitt 5</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span></code></pre></div>
+<p>Die Reihenfolge in der Datei ist die Reihenfolge im Buch.
+Inhaltsverzeichnis, Scrollweg und Menü passen sich automatisch an. Ein
+Kapitel entfernen: den Block (von <code>{</code> bis <code>},</code>)
+löschen.</p>
+<p>Das Feld <code>jahr</code> muss keine Zahl sein – im Vereins- und
+Archivbuch stehen dort Stichworte wie „Vorstand“ oder „Termine“. Kurze
+Wörter wirken am besten; längere werden automatisch kleiner gesetzt.</p>
+<h3 id="textlänge">Textlänge</h3>
+<p>Der Text eines Kapitels sollte etwa 300 bis 550 Zeichen haben, damit
+er auf die rechte Buchseite passt. Ist ein Foto zugeordnet, bleibt bei
+kürzeren Texten mehr Platz dafür. Längere Texte werden auf der Buchseite
+abgeschnitten, in der Randnotiz neben dem Buch aber vollständig
+angezeigt.</p>
+<h2 id="regal-schluss-und-pflichtangaben">4. Regal, Schluss und
+Pflichtangaben</h2>
+<p>Ebenfalls in <code>js/inhalt.js</code>:</p>
+<ul>
+<li><code>verein</code>: Name im Menü.</li>
+<li><code>intro</code>: Überschrift und Text am Regal sowie die beiden
+Scroll-Hinweise.</li>
+<li><code>schluss</code>: Überschrift am Ende jedes Buches, Adresszeilen
+und der Knopf („Mitglied werden“). Darunter werden automatisch die
+anderen Bücher angeboten. Der <code>link</code> kann eine E-Mail-Adresse
+(<code>mailto:…</code>) oder eine Internetadresse
+(<code>https://…</code>) sein.</li>
+<li><code>rechtliches</code>: Verweise auf Impressum und
+Datenschutz.</li>
+</ul>
+<p>Direktlinks: <code>index.html#chronik</code>,
+<code>index.html#verein</code>, <code>index.html#archiv</code> öffnen
+das jeweilige Buch sofort (die <code>id</code> des Buches).</p>
+<h2 id="bildergalerie">5. Bildergalerie</h2>
+<p>Jedes Kapitel kann eine Bildergalerie haben. Besucher öffnen sie über
+den Knopf „Bilder ansehen“ in der Randnotiz neben der Buchseite. Das
+erste Bild erscheint zusätzlich als eingeklebtes Foto auf der
+Buchseite.</p>
+<h3 id="a-ordner-anlegen">a) Ordner anlegen</h3>
+<p>Im Ordner <code>bilder/</code> einen Unterordner anlegen, z. B.
+<code>bilder/1712-brand/</code>. Erlaubt sind Buchstaben, Zahlen,
+Bindestrich und Unterstrich – keine Leerzeichen, keine Umlaute.</p>
+<p>Dem Kapitel in <code>js/inhalt.js</code> den Ordnernamen
+zuweisen:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>      galerie<span class="op">:</span> <span class="st">&quot;1712-brand&quot;</span><span class="op">,</span></span></code></pre></div>
+<h3 id="b-bilder-hochladen">b) Bilder hochladen</h3>
+<p>Bilder einfach per FTP in den Ordner legen. Sie erscheinen
+automatisch, sortiert nach Dateiname. Deshalb am besten
+durchnummerieren:</p>
+<pre><code>01_rathaus_vor_dem_brand.jpg
+02_wiederaufbau_1715.jpg
+03_gedenktafel.jpg</code></pre>
+<p>Erlaubte Formate: JPG, PNG, WEBP, GIF. Empfehlung: längste Seite 1600
+bis 2000 Pixel, JPG-Qualität 80, unter 500 KB pro Bild. Große Originale
+vorher verkleinern (z. B. mit IrfanView, Vorschau am Mac oder
+squoosh.app).</p>
+<p><strong>Bildunterschrift</strong> ohne weiteres Zutun: Der Dateiname
+ohne Nummer und Endung, Unterstriche werden zu Leerzeichen. Aus
+<code>02_wiederaufbau_1715.jpg</code> wird „Wiederaufbau 1715“.</p>
+<p><strong>Eigene Bildunterschriften:</strong> Im Bildordner eine Datei
+<code>beschriftungen.json</code> anlegen:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;01_rathaus_vor_dem_brand.jpg&quot;</span><span class="fu">:</span> <span class="st">&quot;Das alte Rathaus, Zeichnung von 1700&quot;</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;03_gedenktafel.jpg&quot;</span><span class="fu">:</span> <span class="st">&quot;Gedenktafel am Marktplatz, aufgestellt 1912&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Bilder ohne Eintrag erhalten weiterhin die automatische
+Unterschrift.</p>
+<h3 id="c-falls-php-nicht-verfügbar-ist">c) Falls PHP nicht verfügbar
+ist</h3>
+<p>Ob PHP läuft, zeigt der Aufruf von
+<code>www.ihre-domain.de/bilder.php</code> im Browser. Erscheint
+<code>{"status":"ok", …}</code>, ist alles in Ordnung. Erscheint
+stattdessen der Programmtext oder ein Download, ist PHP nicht aktiv.
+Dann in jeden Bildordner eine Datei <code>bilder.json</code> legen, die
+die Bilder aufzählt:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span> <span class="dt">&quot;datei&quot;</span><span class="fu">:</span> <span class="st">&quot;01_rathaus_vor_dem_brand.jpg&quot;</span><span class="fu">,</span> <span class="dt">&quot;titel&quot;</span><span class="fu">:</span> <span class="st">&quot;Das alte Rathaus&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span> <span class="dt">&quot;datei&quot;</span><span class="fu">:</span> <span class="st">&quot;02_wiederaufbau_1715.jpg&quot;</span><span class="fu">,</span> <span class="dt">&quot;titel&quot;</span><span class="fu">:</span> <span class="st">&quot;Wiederaufbau 1715&quot;</span> <span class="fu">}</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div>
+<p>Ein Beispiel liegt in <code>bilder/1879-eisenbahn/bilder.json</code>.
+Diese Liste wird nur verwendet, wenn PHP nicht antwortet.</p>
+<h2 id="oberflächen-des-buches-optional">6. Oberflächen des Buches
+(optional)</h2>
+<p>Das Buch wird mit berechneten Oberflächen gezeichnet (Leder mit
+Narbung, Pergament, Holztisch). Wer echte Fotos verwenden möchte, legt
+sie in den Ordner <code>texturen/</code>:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Datei</th>
+<th>Verwendung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>texturen/leder.jpg</code></td>
+<td>Einband und Buchrücken (Goldprägung wird darübergelegt)</td>
+</tr>
+<tr class="even">
+<td><code>texturen/papier.jpg</code></td>
+<td>Buchseiten (Text wird darübergelegt)</td>
+</tr>
+<tr class="odd">
+<td><code>texturen/holz.jpg</code></td>
+<td>Tischplatte</td>
+</tr>
+</tbody>
+</table>
+<p>Empfehlung: quadratisch, nahtlos kachelbar, ca. 1024 × 1024 Pixel,
+JPG. Kostenlose, frei nutzbare Oberflächen gibt es z. B. bei
+ambientcg.com oder polyhaven.com (Lizenz CC0). Fehlt eine Datei, wird
+automatisch die berechnete Oberfläche genutzt.</p>
+<h2 id="impressum-und-datenschutz">7. Impressum und Datenschutz</h2>
+<p><code>impressum.html</code> und <code>datenschutz.html</code> sind
+Vorlagen mit Platzhaltern. Beide im Texteditor öffnen und die kursiv
+bzw. farbig hervorgehobenen Stellen ersetzen. Für Vereine sind Impressum
+(§ 5 DDG) und Datenschutzerklärung verpflichtend.</p>
+<p>Die Website selbst ist datensparsam aufgebaut: keine Cookies, keine
+Google-Schriften, keine externen Skripte, keine Besucherstatistik. In
+der Datenschutzerklärung muss daher im Wesentlichen nur der
+Hosting-Anbieter eingetragen werden.</p>
+<h2 id="farben-und-gestaltung-optional">8. Farben und Gestaltung
+(optional)</h2>
+<p>Grundfarben stehen am Anfang von <code>css/stil.css</code> im Block
+<code>:root</code> (Hintergrund, Pergament, Gold, Textfarben). Die
+Farben des 3D-Buches selbst (Lederton, Papierton) stehen in
+<code>js/chronik.js</code> in den Funktionen <code>lederSatz</code> und
+<code>pergament</code>.</p>
+<h2 id="bedienung-für-besucher">9. Bedienung für Besucher</h2>
+<ul>
+<li><strong>Blättern:</strong> Scrollen oder Wischen (links = vor,
+rechts = zurück); ein Tipp auf die rechte Buchseite blättert vor, auf
+die linke zurück. Ein Klick auf ein eingeklebtes Foto öffnet die
+Galerie.</li>
+<li><strong>Buch auswählen:</strong> Klick oder Tipp auf ein Buch im
+Regal, auf einen der Knöpfe unter der Überschrift oder auf einen
+Buchtitel im Menü.</li>
+<li><strong>Scrollen</strong> oder Wischen blättert durch das Buch. Die
+erste Seite ist das Inhaltsverzeichnis – ein Klick auf einen Eintrag
+blättert direkt zum Kapitel.</li>
+<li><strong>Menü oben:</strong> Buchtitel wechseln das Buch, „Zurück ins
+Regal“ stellt es zurück (auch mit der Esc-Taste). Auf schmalen
+Bildschirmen öffnet „Inhalt“ ein Verzeichnis mit Kapiteln und
+Büchern.</li>
+<li><strong>Bilder ansehen:</strong> öffnet die Galerie. Pfeiltasten,
+Wischen und die Vorschauleiste wechseln das Bild, Esc oder ×
+schließt.</li>
+<li>Besucher mit der Systemeinstellung „Bewegung reduzieren“ sehen das
+Buch ohne Nachlauf-Effekte.</li>
+</ul>
+<h2 id="wenn-etwas-nicht-klappt">10. Wenn etwas nicht klappt</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problem</th>
+<th>Ursache und Lösung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nach einer Textänderung ist die Seite leer oder zeigt den alten
+Stand</td>
+<td>Tippfehler in <code>inhalt.js</code> (meist ein fehlendes Komma oder
+Anführungszeichen). Letzte Änderung prüfen oder Sicherungskopie
+zurückspielen. Außerdem Browser-Cache leeren (Strg + F5).</td>
+</tr>
+<tr class="even">
+<td>Galerie-Knopf erscheint nicht</td>
+<td>Ordnername in <code>galerie:</code> stimmt nicht mit dem Ordner
+unter <code>bilder/</code> überein, oder der Ordner enthält keine
+Bilder. Groß-/Kleinschreibung beachten.</td>
+</tr>
+<tr class="odd">
+<td>Galerie leer, obwohl Bilder im Ordner liegen</td>
+<td>PHP nicht aktiv (Test siehe 5c) → <code>bilder.json</code>
+anlegen.</td>
+</tr>
+<tr class="even">
+<td>Buch bleibt schwarz, „Die Chronik wird aufgeschlagen“ verschwindet
+nicht</td>
+<td>Ordner <code>js/vendor</code> oder <code>fonts</code> wurde nicht
+mit hochgeladen. Alle Ordner vollständig übertragen.</td>
+</tr>
+<tr class="odd">
+<td>Umlaute werden falsch angezeigt</td>
+<td>Datei wurde nicht als UTF-8 gespeichert. Im Editor beim Speichern
+„UTF-8“ wählen.</td>
+</tr>
+</tbody>
+</table>
+<p>Technische Basis: three.js r128 (MIT-Lizenz), GSAP 3.12 mit
+ScrollTrigger (Standardlizenz, für diese Nutzung kostenlos), Schriften
+Alegreya und Alegreya Sans (SIL Open Font License, siehe
+<code>fonts/</code>).</p>
+</body>
+</html>
